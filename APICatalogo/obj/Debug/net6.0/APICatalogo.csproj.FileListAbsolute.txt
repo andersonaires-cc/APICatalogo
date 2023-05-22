@@ -25,3 +25,11 @@ C:\Users\christina Ferreira\Desktop\AndersonAires\Cursos\Curso_Web_API_ASP_.NET_
 C:\Users\christina Ferreira\Desktop\AndersonAires\Cursos\Curso_Web_API_ASP_.NET_Core_Essencial\APICatalogo\APICatalogo\obj\Debug\net6.0\APICatalogo.pdb
 C:\Users\christina Ferreira\Desktop\AndersonAires\Cursos\Curso_Web_API_ASP_.NET_Core_Essencial\APICatalogo\APICatalogo\obj\Debug\net6.0\APICatalogo.genruntimeconfig.cache
 C:\Users\christina Ferreira\Desktop\AndersonAires\Cursos\Curso_Web_API_ASP_.NET_Core_Essencial\APICatalogo\APICatalogo\obj\Debug\net6.0\ref\APICatalogo.dll
+C:\Users\christina Ferreira\Desktop\AndersonAires\Cursos\Curso_Web_API_ASP_.NET_Core_Essencial\APICatalogo\APICatalogo\bin\Debug\net6.0\Humanizer.dll
+C:\Users\christina Ferreira\Desktop\AndersonAires\Cursos\Curso_Web_API_ASP_.NET_Core_Essencial\APICatalogo\APICatalogo\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\christina Ferreira\Desktop\AndersonAires\Cursos\Curso_Web_API_ASP_.NET_Core_Essencial\APICatalogo\APICatalogo\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\christina Ferreira\Desktop\AndersonAires\Cursos\Curso_Web_API_ASP_.NET_Core_Essencial\APICatalogo\APICatalogo\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\christina Ferreira\Desktop\AndersonAires\Cursos\Curso_Web_API_ASP_.NET_Core_Essencial\APICatalogo\APICatalogo\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\christina Ferreira\Desktop\AndersonAires\Cursos\Curso_Web_API_ASP_.NET_Core_Essencial\APICatalogo\APICatalogo\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\christina Ferreira\Desktop\AndersonAires\Cursos\Curso_Web_API_ASP_.NET_Core_Essencial\APICatalogo\APICatalogo\bin\Debug\net6.0\MySqlConnector.dll
+C:\Users\christina Ferreira\Desktop\AndersonAires\Cursos\Curso_Web_API_ASP_.NET_Core_Essencial\APICatalogo\APICatalogo\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
