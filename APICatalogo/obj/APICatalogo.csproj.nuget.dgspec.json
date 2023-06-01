@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\christina Ferreira\\Desktop\\AndersonAires\\Cursos\\Curso_Web_API_ASP_.NET_Core_Essencial\\APICatalogo\\APICatalogo\\APICatalogo.csproj": {}
+    "C:\\Users\\catar\\OneDrive\\Área de Trabalho\\Anderson\\APICatalogo\\APICatalogo\\APICatalogo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\christina Ferreira\\Desktop\\AndersonAires\\Cursos\\Curso_Web_API_ASP_.NET_Core_Essencial\\APICatalogo\\APICatalogo\\APICatalogo.csproj": {
+    "C:\\Users\\catar\\OneDrive\\Área de Trabalho\\Anderson\\APICatalogo\\APICatalogo\\APICatalogo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\christina Ferreira\\Desktop\\AndersonAires\\Cursos\\Curso_Web_API_ASP_.NET_Core_Essencial\\APICatalogo\\APICatalogo\\APICatalogo.csproj",
+        "projectUniqueName": "C:\\Users\\catar\\OneDrive\\Área de Trabalho\\Anderson\\APICatalogo\\APICatalogo\\APICatalogo.csproj",
         "projectName": "APICatalogo",
-        "projectPath": "C:\\Users\\christina Ferreira\\Desktop\\AndersonAires\\Cursos\\Curso_Web_API_ASP_.NET_Core_Essencial\\APICatalogo\\APICatalogo\\APICatalogo.csproj",
-        "packagesPath": "C:\\Users\\christina Ferreira\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\christina Ferreira\\Desktop\\AndersonAires\\Cursos\\Curso_Web_API_ASP_.NET_Core_Essencial\\APICatalogo\\APICatalogo\\obj\\",
+        "projectPath": "C:\\Users\\catar\\OneDrive\\Área de Trabalho\\Anderson\\APICatalogo\\APICatalogo\\APICatalogo.csproj",
+        "packagesPath": "C:\\Users\\catar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\catar\\OneDrive\\Área de Trabalho\\Anderson\\APICatalogo\\APICatalogo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\christina Ferreira\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\catar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -61,7 +62,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -73,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.311\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
