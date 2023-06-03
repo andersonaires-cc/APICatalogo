@@ -31,20 +31,37 @@ public class CategoriasController : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<Categoria>> Get()
     {
-        return _context.Categorias.AsNoTracking().ToList();
+        try
+        {
+            return _context.Categorias.AsNoTracking().ToList();
+
+        }catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                "Ocorreu um problema ao tratar a sua solicitação");
+        }
     }
 
     [HttpGet("{id:int}", Name ="ObterCategoria")]
     public ActionResult<Categoria>Get(int id)
     {
-        var categoria = _context.Categorias.FirstOrDefault(p => p.CategoriaId == id);
-
-        if(categoria == null)
+        try
         {
-            return NotFound("Categoria não encontrada...");
-        }
+            var categoria = _context.Categorias.FirstOrDefault(p => p.CategoriaId == id);
 
-        return Ok(categoria);
+            if (categoria == null)
+            {
+                return NotFound($"Categoria com id= {id} não encontrada...");
+            }
+
+            return Ok(categoria);
+        }
+        catch (Exception )
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+               "Ocorreu um problema ao tratar a sua solicitação");
+        }
+        
     }
 
     [HttpPost]
@@ -52,7 +69,7 @@ public class CategoriasController : ControllerBase
     {
         if(categoria is null)
         {
-            return BadRequest();
+            return BadRequest("Dados Inválidos");
         }
 
         _context.Categorias.Add(categoria);
@@ -81,7 +98,7 @@ public class CategoriasController : ControllerBase
 
         if(categoria == null)
         {
-            return NotFound("Ctaegoria não encontrada");
+            return NotFound("Categoria não encontrada");
         }
         _context.Categorias.Remove(categoria);
         _context.SaveChanges();
