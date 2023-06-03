@@ -25,6 +25,7 @@ public class CategoriasController : ControllerBase
         // método include carrega as entidades relacionadas
         // (no caso Produtos as categorias)
        // return _context.Categorias.Include(p => p.Produtos).ToList();
+       //utilizando filtro, boa prática.
        return _context.Categorias.Include(p => p.Produtos).Where(c => c.CategoriaId <=5).ToList();
     }
 
