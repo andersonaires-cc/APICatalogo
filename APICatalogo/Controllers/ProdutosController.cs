@@ -2,6 +2,7 @@
 using APICatalogo.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace APICatalogo;
@@ -53,7 +54,7 @@ public class ProdutosController : ControllerBase
     }
 
     [HttpGet("{id}", Name="ObterProduto")]
-    public async Task<ActionResult<Produto>> Get(int id)
+    public async Task<ActionResult<Produto>> Get([FromQuery]int id)
     {
         var produto = await _context.Produtos.FirstOrDefaultAsync(p => p.ProdutoId == id);
         if(produto is null)
