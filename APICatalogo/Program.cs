@@ -12,7 +12,7 @@ builder.Services.AddControllers()
                 options.JsonSerializerOptions
                 .ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-builder.Services.AddTransient<IMeuServico,MeuServico>();
+//builder.Services.AddTransient<IMeuServico,MeuServico>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

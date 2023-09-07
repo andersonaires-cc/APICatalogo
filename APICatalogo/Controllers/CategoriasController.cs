@@ -19,11 +19,11 @@ public class CategoriasController : ControllerBase
         _context = context;
     }
 
-    [HttpGet("saudacao/{nome}")]
-    public ActionResult<string> GetSaudacao([FromServices] IMeuServico meuservico, string nome)
-    {
-        return meuservico.Saudacao(nome);
-    }
+    //[HttpGet("saudacao/{nome}")]
+    //public ActionResult<string> GetSaudacao([FromServices] IMeuServico meuservico, string nome)
+    //{
+    //    return meuservico.Saudacao(nome);
+    //}
 
 
     [HttpGet("produtos")]
