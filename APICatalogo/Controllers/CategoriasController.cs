@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace APICatalogo.Controllers;
 
 
-[Route("[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class CategoriasController : ControllerBase
 {
@@ -23,9 +23,9 @@ public class CategoriasController : ControllerBase
     {
         // método include carrega as entidades relacionadas
         // (no caso Produtos as categorias)
-       // return _context.Categorias.Include(p => p.Produtos).ToList();
-       //utilizando filtro, boa prática.
-       return _context.Categorias.Include(p => p.Produtos).Where(c => c.CategoriaId <=5).ToList();
+        // return _context.Categorias.Include(p => p.Produtos).ToList();
+        //utilizando filtro, boa prática.
+        return _context.Categorias.Include(p => p.Produtos).Where(c => c.CategoriaId <= 5).ToList();
     }
 
     [HttpGet]
@@ -35,15 +35,15 @@ public class CategoriasController : ControllerBase
         {
             return _context.Categorias.AsNoTracking().ToList();
 
-        }catch (Exception)
+        } catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
                 "Ocorreu um problema ao tratar a sua solicitação");
         }
     }
 
-    [HttpGet("{id:int}", Name ="ObterCategoria")]
-    public ActionResult<Categoria>Get(int id)
+    [HttpGet("{id:int}", Name = "ObterCategoria")]
+    public ActionResult<Categoria> Get(int id)
     {
         try
         {
@@ -56,18 +56,18 @@ public class CategoriasController : ControllerBase
 
             return Ok(categoria);
         }
-        catch (Exception )
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
                "Ocorreu um problema ao tratar a sua solicitação");
         }
-        
+
     }
 
     [HttpPost]
     public ActionResult Post(Categoria categoria)
     {
-        if(categoria is null)
+        if (categoria is null)
         {
             return BadRequest("Dados Inválidos");
         }
@@ -79,7 +79,7 @@ public class CategoriasController : ControllerBase
                 new { id = categoria.CategoriaId }, categoria);
     }
 
-    [HttpPut]
+    [HttpPut("{id}")]
     public ActionResult Put(int id, Categoria categoria)
     {
         if(id != categoria.CategoriaId)
@@ -91,7 +91,7 @@ public class CategoriasController : ControllerBase
         return Ok(categoria);
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{id}")]
     public ActionResult<Categoria> Delete(int id)
     {
         var categoria = _context.Categorias.FirstOrDefault(p => p.CategoriaId == id);

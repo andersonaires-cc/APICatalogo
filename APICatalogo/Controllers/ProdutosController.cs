@@ -19,8 +19,7 @@ public class ProdutosController : ControllerBase
         _context = context;
     }
 
-    [HttpGet("primeiro")]
-    [HttpGet("teste")]
+
     [HttpGet("/primeiro")]
     public ActionResult<Produto> GetPrimeiro()
     {
@@ -45,12 +44,6 @@ public class ProdutosController : ControllerBase
         }
 
         return produtos;
-    }
-
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Produto>>> Get2()
-    {
-        return await _context.Produtos.AsNoTracking().ToListAsync();
     }
 
     [HttpGet("{id}", Name="ObterProduto")]
@@ -79,7 +72,7 @@ public class ProdutosController : ControllerBase
             new { id = produto.ProdutoId }, produto);
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut("{id}")]
     public ActionResult Put(int id, Produto produto)
     {
         if (id != produto.ProdutoId)
@@ -92,7 +85,7 @@ public class ProdutosController : ControllerBase
         return Ok(produto);
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{id}")]
     public ActionResult Delete(int id)
     {
         var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
