@@ -5,7 +5,7 @@ using APICatalogo.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container. => ConfigureServices
 
 builder.Services.AddControllers()
                 .AddJsonOptions( options =>
@@ -18,13 +18,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
 builder.Services.AddDbContext<AppDbContext>(options =>
                             options.UseMySql(mySqlConnection,
                             ServerVersion.AutoDetect(mySqlConnection)));
 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-var app = builder.Build();
+var app = builder.Build(); //Configure
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

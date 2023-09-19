@@ -4,6 +4,6 @@
     {
         IProdutoRepository ProdutoRepository { get; }
         ICategoriaRepository CategoriaRepository { get; }
-        void commit ();
+        void Commit ();
     }
 }

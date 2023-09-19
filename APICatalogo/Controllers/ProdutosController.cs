@@ -1,5 +1,6 @@
 ﻿using APICatalogo.Context;
 using APICatalogo.Models;
+using APICatalogo.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -12,30 +13,23 @@ namespace APICatalogo;
 [ApiController]
 public class ProdutosController : ControllerBase
 {
-    private readonly AppDbContext _context;
+    private readonly IUnitOfWork _uof;
 
-    public ProdutosController(AppDbContext context)
+    public ProdutosController(IUnitOfWork context)
     {
-        _context = context;
+        _uof = context;
     }
 
-
-    [HttpGet("/primeiro")]
-    public ActionResult<Produto> GetPrimeiro()
+    [HttpGet("menorpreco")]
+    public ActionResult<IEnumerable<Produto>> GetProdutosPreco()
     {
-        var produto = _context.Produtos.FirstOrDefault();
-        if (produto is null)
-        {
-            return NotFound();
-        }
-
-        return produto;
+        return _uof.ProdutoRepository.GetProdutosPorPreco().ToList();
     }
 
     [HttpGet]
     public ActionResult<IEnumerable<Produto>> Get()
     {
-        var produtos = _context.Produtos.AsNoTracking().ToList();
+        var produtos = _uof.ProdutoRepository.Get().ToList();
         if (produtos is null)
         {
         //equivalente ao 404
@@ -47,9 +41,10 @@ public class ProdutosController : ControllerBase
     }
 
     [HttpGet("{id}", Name="ObterProduto")]
-    public async Task<ActionResult<Produto>> Get([FromQuery]int id)
+    public ActionResult<Produto> Get([FromQuery]int id)
     {
-        var produto = await _context.Produtos.FirstOrDefaultAsync(p => p.ProdutoId == id);
+        var produto = _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
+
         if(produto is null)
         {
             return NotFound("Produto não encontrado...");
@@ -64,9 +59,9 @@ public class ProdutosController : ControllerBase
         {
             return BadRequest();
         }
-        _context.Produtos.Add(produto);
+        _uof.ProdutoRepository.Add(produto);
         //persistrir no banco de dados
-        _context.SaveChanges();
+        _uof.Commit();
 
         return new CreatedAtRouteResult("ObterProduto",
             new { id = produto.ProdutoId }, produto);
@@ -79,8 +74,8 @@ public class ProdutosController : ControllerBase
         {
             return BadRequest();
         }
-        _context.Entry(produto).State = EntityState.Modified;
-        _context.SaveChanges();
+        _uof.ProdutoRepository.Update(produto);
+        _uof.Commit();
 
         return Ok(produto);
     }
@@ -88,15 +83,15 @@ public class ProdutosController : ControllerBase
     [HttpDelete("{id}")]
     public ActionResult Delete(int id)
     {
-        var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
-        //var produto = _context.Produtos.Find(id);
+        var produto = _uof.Produtos.FirstOrDefault(p => p.ProdutoId == id);
+        //var produto = _uof.Produtos.Find(id);
 
         if(produto is null)
         {
             return NotFound("Produto não localizado...");
         }
-        _context.Produtos.Remove(produto);
-        _context.SaveChanges();
+        _uof.ProdutoRepository.Delete(produto);
+        _uof.Commit();
 
         return Ok(produto);
     }
