@@ -83,7 +83,7 @@ public class ProdutosController : ControllerBase
     [HttpDelete("{id}")]
     public ActionResult Delete(int id)
     {
-        var produto = _uof.Produtos.FirstOrDefault(p => p.ProdutoId == id);
+        var produto = _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
         //var produto = _uof.Produtos.Find(id);
 
         if(produto is null)
