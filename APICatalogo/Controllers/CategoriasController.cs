@@ -23,7 +23,7 @@ public class CategoriasController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet("produtos")]
+    [HttpGet("categorias")]
     public ActionResult<IEnumerable<CategoriaDTO>> GetCategoriasProdutos()
     {
         // método include carrega as entidades relacionadas
@@ -41,7 +41,7 @@ public class CategoriasController : ControllerBase
     {
         try
         {
-            var categorias = _uof.ProdutoRepository.Get().ToList();
+            var categorias = _uof.CategoriaRepository.Get().ToList();
             var categoriaDTO = _mapper.Map<List<CategoriaDTO>>(categorias);
 
             return categoriaDTO;
@@ -54,7 +54,7 @@ public class CategoriasController : ControllerBase
     }
 
     [HttpGet("{id:int}", Name = "ObterCategoria")]
-    public ActionResult<CategoriaDTO> Get([FromQuery] int id)
+    public ActionResult<CategoriaDTO> Get(int id)
     {
         try
         {
@@ -78,14 +78,14 @@ public class CategoriasController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult Post([FromBody]CategoriaDTO categoriaDto)
+    public ActionResult Post(CategoriaDTO categoriaDto)
     {
         var categoria = _mapper.Map<Categoria>(categoriaDto);
 
         _uof.CategoriaRepository.Add(categoria);
         _uof.Commit();
 
-        var categoriaDTO = _mapper.Map<CategoriaDTO>(categoriaDto);
+        var categoriaDTO = _mapper.Map<CategoriaDTO>(categoria);
 
         return new CreatedAtRouteResult("ObterCategoria",
                 new { id = categoria.CategoriaId }, categoriaDTO);

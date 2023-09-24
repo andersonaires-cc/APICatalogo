@@ -43,7 +43,7 @@ public class ProdutosController : ControllerBase
     }
 
     [HttpGet("{id}", Name="ObterProduto")]
-    public ActionResult<ProdutoDTO> Get([FromQuery]int id)
+    public ActionResult<ProdutoDTO> Get(int id)
     {
         var produto = _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
 
@@ -57,7 +57,7 @@ public class ProdutosController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult Post([FromBody]ProdutoDTO produtoDto)
+    public ActionResult Post(ProdutoDTO produtoDto)
     {
         var produto = _mapper.Map<Produto>(produtoDto);
 
@@ -65,7 +65,7 @@ public class ProdutosController : ControllerBase
         //persistrir no banco de dados
         _uof.Commit();
 
-        var produtoDTO = _mapper.Map<ProdutoDTO>(produtoDto);
+        var produtoDTO = _mapper.Map<ProdutoDTO>(produto);
 
         return new CreatedAtRouteResult("ObterProduto",
             new { id = produto.ProdutoId }, produtoDTO);
