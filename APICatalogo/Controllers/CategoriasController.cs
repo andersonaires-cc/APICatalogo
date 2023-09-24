@@ -1,8 +1,11 @@
 ﻿using APICatalogo.Context;
 using APICatalogo.Models;
+using AutoMapper;
+using APICatalogo.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using APICatalogo.DTOs;
 
 namespace APICatalogo.Controllers;
 
@@ -11,29 +14,37 @@ namespace APICatalogo.Controllers;
 [ApiController]
 public class CategoriasController : ControllerBase
 {
-    private readonly AppDbContext _context;
+    private readonly IUnitOfWork _uof;
+    private readonly IMapper _mapper;
 
-    public CategoriasController(AppDbContext context)
+    public CategoriasController(IUnitOfWork context, IMapper mapper)
     {
-        _context = context;
+        _uof = context;
+        _mapper = mapper;
     }
 
     [HttpGet("produtos")]
-    public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
+    public ActionResult<IEnumerable<CategoriaDTO>> GetCategoriasProdutos()
     {
         // método include carrega as entidades relacionadas
         // (no caso Produtos as categorias)
         // return _context.Categorias.Include(p => p.Produtos).ToList();
         //utilizando filtro, boa prática.
-        return _context.Categorias.Include(p => p.Produtos).Where(c => c.CategoriaId <= 5).ToList();
+        var categorias = _uof.CategoriaRepository.GetCategoriasProdutos().ToList();
+        var cetagoriasDTO = _mapper.Map<List<CategoriaDTO>>(categorias);
+
+        return cetagoriasDTO;
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Categoria>> Get()
+    public ActionResult<IEnumerable<CategoriaDTO>> Get()
     {
         try
         {
-            return _context.Categorias.AsNoTracking().ToList();
+            var categorias = _uof.ProdutoRepository.Get().ToList();
+            var categoriaDTO = _mapper.Map<List<CategoriaDTO>>(categorias);
+
+            return categoriaDTO;
 
         } catch (Exception)
         {
@@ -43,18 +54,20 @@ public class CategoriasController : ControllerBase
     }
 
     [HttpGet("{id:int}", Name = "ObterCategoria")]
-    public ActionResult<Categoria> Get(int id)
+    public ActionResult<CategoriaDTO> Get([FromQuery] int id)
     {
         try
         {
-            var categoria = _context.Categorias.FirstOrDefault(p => p.CategoriaId == id);
+            var categoria = _uof.CategoriaRepository.GetById(p => p.CategoriaId == id);
 
             if (categoria == null)
             {
                 return NotFound($"Categoria com id= {id} não encontrada...");
             }
 
-            return Ok(categoria);
+            var categoriaDTO = _mapper.Map<CategoriaDTO>(categoria);
+
+            return categoriaDTO;
         }
         catch (Exception)
         {
@@ -65,43 +78,46 @@ public class CategoriasController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult Post(Categoria categoria)
+    public ActionResult Post([FromBody]CategoriaDTO categoriaDto)
     {
-        if (categoria is null)
-        {
-            return BadRequest("Dados Inválidos");
-        }
+        var categoria = _mapper.Map<Categoria>(categoriaDto);
 
-        _context.Categorias.Add(categoria);
-        _context.SaveChanges();
+        _uof.CategoriaRepository.Add(categoria);
+        _uof.Commit();
+
+        var categoriaDTO = _mapper.Map<CategoriaDTO>(categoriaDto);
 
         return new CreatedAtRouteResult("ObterCategoria",
-                new { id = categoria.CategoriaId }, categoria);
+                new { id = categoria.CategoriaId }, categoriaDTO);
     }
 
     [HttpPut("{id}")]
-    public ActionResult Put(int id, Categoria categoria)
+    public ActionResult Put(int id, [FromBody] CategoriaDTO categoriaDto)
     {
-        if(id != categoria.CategoriaId)
+        if(id != categoriaDto.CategoriaId)
         {
             return BadRequest();
         }
-        _context.Entry(categoria).State = EntityState.Modified;
-        _context.SaveChanges();
-        return Ok(categoria);
+
+        var categoria = _mapper.Map<Categoria>(categoriaDto);
+        _uof.CategoriaRepository.Update(categoria);
+        _uof.Commit();
+        return Ok();
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<Categoria> Delete(int id)
+    public ActionResult<CategoriaDTO> Delete(int id)
     {
-        var categoria = _context.Categorias.FirstOrDefault(p => p.CategoriaId == id);
+        var categoria = _uof.CategoriaRepository.GetById(p => p.CategoriaId == id);
 
         if(categoria == null)
         {
             return NotFound("Categoria não encontrada");
         }
-        _context.Categorias.Remove(categoria);
-        _context.SaveChanges();
-        return Ok(categoria);
+        _uof.CategoriaRepository.Delete(categoria);
+        _uof.Commit();
+        var produtoDto = _mapper.Map<CategoriaDTO>(categoria);
+
+        return produtoDto;
     }
 }
