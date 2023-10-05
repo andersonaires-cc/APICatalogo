@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using APICatalogo.DTOs;
+using APICatalogo.Pagination;
+using Newtonsoft.Json;
 
 namespace APICatalogo.Controllers;
 
@@ -23,35 +25,45 @@ public class CategoriasController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet("categorias")]
-    public ActionResult<IEnumerable<CategoriaDTO>> GetCategoriasProdutos()
+    [HttpGet]
+    public ActionResult<IEnumerable<CategoriaDTO>> Get([FromQuery] CategoriasParameters categoriasParameters)
     {
-        // método include carrega as entidades relacionadas
-        // (no caso Produtos as categorias)
-        // return _context.Categorias.Include(p => p.Produtos).ToList();
-        //utilizando filtro, boa prática.
-        var categorias = _uof.CategoriaRepository.GetCategoriasProdutos().ToList();
+
+        var categorias = _uof.CategoriaRepository.GetCategorias(categoriasParameters);
+
+        var metadata = new
+        {
+            categorias.TotalCount,
+            categorias.PageSize,
+            categorias.CurrentPage,
+            categorias.TotalPages,
+            categorias.HasNext,
+            categorias.HasPrevious
+        };
+
+        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
         var cetagoriasDTO = _mapper.Map<List<CategoriaDTO>>(categorias);
 
         return cetagoriasDTO;
     }
 
-    [HttpGet]
-    public ActionResult<IEnumerable<CategoriaDTO>> Get()
-    {
-        try
-        {
-            var categorias = _uof.CategoriaRepository.Get().ToList();
-            var categoriaDTO = _mapper.Map<List<CategoriaDTO>>(categorias);
+    //[HttpGet]
+    //public ActionResult<IEnumerable<CategoriaDTO>> Get()
+    //{
+    //    try
+    //    {
+    //        var categorias = _uof.CategoriaRepository.Get().ToList();
+    //        var categoriaDTO = _mapper.Map<List<CategoriaDTO>>(categorias);
 
-            return categoriaDTO;
+    //        return categoriaDTO;
 
-        } catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                "Ocorreu um problema ao tratar a sua solicitação");
-        }
-    }
+    //    } catch (Exception)
+    //    {
+    //        return StatusCode(StatusCodes.Status500InternalServerError,
+    //            "Ocorreu um problema ao tratar a sua solicitação");
+    //    }
+    //}
 
     [HttpGet("{id:int}", Name = "ObterCategoria")]
     public ActionResult<CategoriaDTO> Get(int id)
