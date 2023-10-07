@@ -14,18 +14,13 @@ namespace APICatalogo.Repository
 
         public PagedList<Categoria> GetCategorias(CategoriasParameters categoriasParameters)
         {
-            //return Get()
-            //    .OrderBy(on => on.Nome)
-            //    .Skip((produtosParameters.PageNumber - 1) * produtosParameters.PageSize)
-            //    .Take(produtosParameters.PageSize)
-            //    .ToList();
             return PagedList<Categoria>.ToPagedList(Get().OrderBy(on => on.Nome),
-                categoriasParameters.PageNumber, categoriasParameters.PageSize);
+                    categoriasParameters.PageNumber, categoriasParameters.PageSize);
         }
 
-        public IEnumerable<Categoria> GetCategoriasProdutos()
+        public async Task<IEnumerable<Categoria>> GetCategoriasProdutos()
         {
-            return Get().Include(x => x.Produtos);
+            return await Get().Include(x => x.Produtos).ToListAsync();
         }
     }
 }
