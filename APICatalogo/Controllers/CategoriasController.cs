@@ -66,11 +66,11 @@ public class CategoriasController : ControllerBase
     //}
 
     [HttpGet("{id:int}", Name = "ObterCategoria")]
-    public ActionResult<CategoriaDTO> Get(int id)
+    public async Task<ActionResult<CategoriaDTO>> Get(int id)
     {
         try
         {
-            var categoria = _uof.CategoriaRepository.GetById(p => p.CategoriaId == id);
+            var categoria = await _uof.CategoriaRepository.GetById(p => p.CategoriaId == id);
 
             if (categoria == null)
             {
@@ -90,12 +90,12 @@ public class CategoriasController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult Post(CategoriaDTO categoriaDto)
+    public async Task<ActionResult> Post(CategoriaDTO categoriaDto)
     {
         var categoria = _mapper.Map<Categoria>(categoriaDto);
 
         _uof.CategoriaRepository.Add(categoria);
-        _uof.Commit();
+        await _uof.Commit();
 
         var categoriaDTO = _mapper.Map<CategoriaDTO>(categoria);
 
@@ -104,7 +104,7 @@ public class CategoriasController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public ActionResult Put(int id, [FromBody] CategoriaDTO categoriaDto)
+    public async Task<ActionResult> Put(int id, [FromBody] CategoriaDTO categoriaDto)
     {
         if(id != categoriaDto.CategoriaId)
         {
@@ -113,14 +113,14 @@ public class CategoriasController : ControllerBase
 
         var categoria = _mapper.Map<Categoria>(categoriaDto);
         _uof.CategoriaRepository.Update(categoria);
-        _uof.Commit();
+        await _uof.Commit();
         return Ok();
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<CategoriaDTO> Delete(int id)
+    public async Task<ActionResult<CategoriaDTO>> Delete(int id)
     {
-        var categoria = _uof.CategoriaRepository.GetById(p => p.CategoriaId == id);
+        var categoria = await _uof.CategoriaRepository.GetById(p => p.CategoriaId == id);
 
         if(categoria == null)
         {
