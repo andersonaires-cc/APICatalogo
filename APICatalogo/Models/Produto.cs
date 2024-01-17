@@ -11,17 +11,19 @@ public class Produto : IValidatableObject
     [Key]
     public int ProdutoId { get; set; }
     [Required(ErrorMessage ="O nome é obrigatório")]
-    [StringLength(30, ErrorMessage = "A descrição deve ter no máximo {1} caracteres", MinimumLength = 5)]
+    [StringLength(80, ErrorMessage = "A descrição deve ter no máximo {1} caracteres", MinimumLength = 5)]
     [PrimeiraLetraMaiuscula]
     public string? Nome { get; set; }
     [Required]
     [StringLength(300)]
     public string? Descricao { get; set; }
+
     [Required]
     [DataType(DataType.Currency)]
-    [Column(TypeName ="decimal(20,2)")]
-    [Range(1,1000,ErrorMessage = "Opreço deve estar entre {1} e {2}")]
+    [Column(TypeName ="decimal(8,2)")]
+    [Range(1,1000,ErrorMessage = "O preço deve estar entre {1} e {2}")]
     public decimal Preco { get; set; }
+
     [Required]
     [StringLength(300, MinimumLength = 10)]
     public string? ImagemUrl { get; set; }
