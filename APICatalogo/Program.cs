@@ -42,11 +42,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
-            ValidAudience = Configuration["TokenConfiguration:Audience"],
-            ValidIssuer = Configuration["TokenConfiguration:Issuer"],
+            ValidAudience =  builder.Configuration["TokenConfiguration:Audience"],
+            ValidIssuer = builder.Configuration["TokenConfiguration:Issuer"],
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(Configuration["Jwt:key"]))
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]))
         });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
