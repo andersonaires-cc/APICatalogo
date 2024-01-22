@@ -71,7 +71,7 @@ namespace APICatalogo.Controllers
 
             var result = await _signInManager.PasswordSignInAsync(userInfo.Email,
                         userInfo.Password, isPersistent: false, lockoutOnFailure: false);
-            if(!result.Succeeded)
+            if(result.Succeeded)
             {
                 return Ok(GeraToken(userInfo));
             }
