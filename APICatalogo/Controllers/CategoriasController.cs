@@ -10,12 +10,14 @@ using APICatalogo.Pagination;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Cors;
 
 namespace APICatalogo.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[EnableCors("PermitirApiRequest")]
 public class CategoriasController : ControllerBase
 {
     private readonly IUnitOfWork _uof;
