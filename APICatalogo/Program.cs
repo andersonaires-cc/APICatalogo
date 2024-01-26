@@ -15,6 +15,29 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "APICatalogo",
+        Description = "Catálogo",
+        TermsOfService = new Uri("https://macoratti.net/terms"),
+        Contact = new OpenApiContact
+        {
+            Name = "macoratti",
+            Email = "macoratti@yahoo.com",
+            Url = new Uri("https://macoratti.net"),
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Usar sobre LICX",
+            Url = new Uri("https://macoratti.net/license"),
+        }
+    });
+});
+
+
 // Add services to the container. => ConfigureServices
 
 builder.Services.AddControllers()
@@ -120,6 +143,15 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+
+app.UseSwagger();
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json",
+            "API Catalogo");
+})
 
 //app.UseCors(opt => opt.
 //    WithOrigins("https://www.apirequest.io/")
