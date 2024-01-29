@@ -69,6 +69,11 @@ public class CategoriasController : ControllerBase
     //    }
     //}
 
+    /// <summary>
+    /// Obtem uma categoria pelo seu Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id:int}", Name = "ObterCategoria")]
     public async Task<ActionResult<CategoriaDTO>> Get(int id)
     {
@@ -93,6 +98,21 @@ public class CategoriasController : ControllerBase
 
     }
 
+    /// <summary>
+    /// Inclui uma nova Categoria
+    /// </summary>
+    /// <remarks>
+    /// Exemplo de request:
+    /// 
+    ///     POST api/categorias
+    ///     {
+    ///         "categoriaId" : 1,
+    ///         "nome" : "categoria1",
+    ///         "imagemUrl" : "http//teste.net/1.jpg"
+    ///      }
+    /// </remarks>
+    /// <param name="categoriaDto">objeto categoria</param>
+    /// <remarks>Retorna um onbjeto Categoria incluida</remarks>
     [HttpPost]
     public async Task<ActionResult> Post(CategoriaDTO categoriaDto)
     {

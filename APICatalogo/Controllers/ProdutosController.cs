@@ -38,6 +38,11 @@ public class ProdutosController : ControllerBase
         return produtosDTO;
     }
 
+    /// <summary>
+    /// Exibe uma relação dos produtos
+    /// </summary>
+    /// <param name="produtosParameters"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ProdutoDTO>>> Get([FromQuery] ProdutosParameters produtosParameters)
     {
