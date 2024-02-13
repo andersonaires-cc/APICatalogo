@@ -10,6 +10,7 @@ using System.Text;
 
 namespace APICatalogo.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class AutorizaController : ControllerBase

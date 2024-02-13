@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace APICatalogo.Controllers;
 
+[Produces("application/json")]
 [Route("api/[controller]")]
 [ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
