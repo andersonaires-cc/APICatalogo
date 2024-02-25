@@ -76,6 +76,8 @@ public class CategoriasController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id:int}", Name = "ObterCategoria")]
+    [ProducesResponseType(typeof(ProdutoDTO),StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<CategoriaDTO>> Get(int id)
     {
         try
@@ -115,6 +117,8 @@ public class CategoriasController : ControllerBase
     /// <param name="categoriaDto">objeto categoria</param>
     /// <remarks>Retorna um onbjeto Categoria incluida</remarks>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> Post(CategoriaDTO categoriaDto)
     {
         var categoria = _mapper.Map<Categoria>(categoriaDto);
@@ -129,6 +133,7 @@ public class CategoriasController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [ApiConventionMethod(typeof(DefaultApiConventions),nameof(DefaultApiConventions.Put))]
     public async Task<ActionResult> Put(int id, [FromBody] CategoriaDTO categoriaDto)
     {
         if(id != categoriaDto.CategoriaId)

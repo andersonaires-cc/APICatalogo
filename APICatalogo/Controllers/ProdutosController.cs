@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 
 namespace APICatalogo;
 
+[ApiConventionType(typeof(DefaultApiConventions))]
 [Produces("application/json")]
 [Route("api/[controller]")]
 [ApiController]
